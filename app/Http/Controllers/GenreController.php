@@ -35,7 +35,11 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $genre = new Genre();
+      $genre->name = $request->input('genre');
+      $genre->save();
+
+      return redirect()->route('genres.index');
     }
 
     /**
@@ -69,7 +73,7 @@ class GenreController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
-        //
+
     }
 
     /**
