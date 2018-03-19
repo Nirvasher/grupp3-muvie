@@ -36,8 +36,9 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Lägg till film</a>
-              <a class="dropdown-item" href="#">Lägg till genre</a>
-              <a class="dropdown-item" href="#">Lägg till artist</a>
+              <a class="dropdown-item" href="{{ route('genres.create') }}">Lägg till genre</a>
+              <a class="dropdown-item" href="{{ route('actors.create') }}">Lägg till skådespelare</a>
+              <a class="dropdown-item" href="{{ route('directors.create') }}">Lägg till regissör</a>
             </div>
           </li>
           @endif

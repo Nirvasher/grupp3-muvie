@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Actor;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class ActorController extends Controller
      */
     public function create()
     {
-        //
+      return view('actors.create');
     }
 
     /**
@@ -35,7 +36,13 @@ class ActorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $actor = new Actor();
+      $actor->name = $request->input('actor');
+      $actor->save();
+
+      Session::flash('flash_message', 'Skådespelaren har lagts till!');
+
+      return redirect()->route('actors.index');
     }
 
     /**
@@ -57,7 +64,7 @@ class ActorController extends Controller
      */
     public function edit(Actor $actor)
     {
-        //
+      return view('actors.edit', ['actor' => $actor]);
     }
 
     /**
@@ -69,7 +76,12 @@ class ActorController extends Controller
      */
     public function update(Request $request, Actor $actor)
     {
-        //
+      $actor->name = $request->input('name');
+      $actor->save();
+
+      Session::flash('flash_message', 'Skådespelaren har uppdaterats!');
+
+      return redirect()->back();
     }
 
     /**

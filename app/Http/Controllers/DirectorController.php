@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Director;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class DirectorController extends Controller
      */
     public function index()
     {
-        //
+      return view('directors.index', ['directors' => Director::get()]);
     }
 
     /**
@@ -24,7 +25,7 @@ class DirectorController extends Controller
      */
     public function create()
     {
-        //
+      return view('directors.create');
     }
 
     /**
@@ -35,7 +36,13 @@ class DirectorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $director = new Director();
+      $director->name = $request->input('director');
+      $director->save();
+
+      Session::flash('flash_message', 'Regissören har lagts till!');
+
+      return redirect()->route('directors.index');
     }
 
     /**
@@ -57,7 +64,7 @@ class DirectorController extends Controller
      */
     public function edit(Director $director)
     {
-        //
+      return view('directors.edit', ['director' => $director]);
     }
 
     /**
@@ -69,7 +76,12 @@ class DirectorController extends Controller
      */
     public function update(Request $request, Director $director)
     {
-        //
+      $director->name = $request->input('name');
+      $director->save();
+
+      Session::flash('flash_message', 'Regissören har uppdaterats!');
+
+      return redirect()->back();
     }
 
     /**

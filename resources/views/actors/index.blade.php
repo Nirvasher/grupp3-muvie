@@ -5,8 +5,8 @@
     <h1>Skådespelare:</h1>
 
     <ul>
-      @foreach($artists as $artist)
-        <li><a href="{{ route('artists.show', ['artist' => $artist->id]) }}">{{ $artist->name }}</a></li>
+      @foreach($actors as $actor)
+        <li><a href="{{ route('actors.show', ['actor' => $actor->id]) }}">{{ $actor->name }}</a></li>
       @endforeach
     </ul>
   </div>

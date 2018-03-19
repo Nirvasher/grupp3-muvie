@@ -2,11 +2,11 @@
 @section('content')
 
 <div class="container">
-  <form method="POST" action="{{ route('genres.store') }}">
-    @csrf 
+  <form method="POST" action="{{ route('actors.store') }}">
+    @csrf
     <div class="form-group">
-      <label for="genre">Genrenamn</label>
-      <input type="text" class="form-control" id="genre" name="genre" placeholder="Lägg till genre">
+      <label for="actor">Skådespelarenamn</label>
+      <input type="text" class="form-control" id="actor" name="actor" placeholder="Lägg till skådespelare">
 
     </div>
 
