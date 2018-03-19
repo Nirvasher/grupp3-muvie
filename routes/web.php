@@ -21,7 +21,9 @@ Route::get('/movies/{movie}', 'MovieController@show')->name('movies.show');
 Route::get('/genres', 'GenreController@index')->name('genres.index');
 Route::get('/genres/create', 'GenreController@create')->name('genres.create');
 Route::post('/genres', 'GenreController@store')->name('genres.store');
+Route::get('/genres/{genre}/edit', 'GenreController@edit')->name('genres.edit');
 Route::get('/genres/{genre}', 'GenreController@show')->name('genres.show');
+Route::post('/genres/{genre}', 'GenreController@update')->name('genres.update');
 
 Route::get('/actors', 'ActorController@index')->name('actors.index');
 Route::get('/actors/{actor}', 'ActorController@show')->name('actors.show');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Genre;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,8 @@ class GenreController extends Controller
       $genre->name = $request->input('genre');
       $genre->save();
 
+      Session::flash('flash_message', 'Genren har skapats!');
+
       return redirect()->route('genres.index');
     }
 
@@ -61,7 +64,7 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('genres.edit', ['genre' => $genre]);
     }
 
     /**
@@ -73,7 +76,14 @@ class GenreController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
+      $genre->name = $request->input('name');
+      $genre->save();
 
+//        $input = $request->all();
+//        $genre->fill($input)->save();
+        Session::flash('flash_message', 'Genren har uppdaterats!');
+
+        return redirect()->back();
     }
 
     /**
@@ -84,6 +94,6 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+
     }
 }
