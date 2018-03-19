@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Actor extends Model
 {
-  public function artist() {
-    return $this->belongsTo('App\Artist');
+  public function movies() {
+    return $this->belongsToMany('App\Movie');
   }
 }

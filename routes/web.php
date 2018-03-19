@@ -22,3 +22,8 @@ Route::get('/genres', 'GenreController@index')->name('genres.index');
 Route::get('/genres/create', 'GenreController@create')->name('genres.create');
 Route::post('/genres', 'GenreController@store')->name('genres.store');
 Route::get('/genres/{genre}', 'GenreController@show')->name('genres.show');
+
+Route::get('/actors', 'ActorController@index')->name('actors.index');
+Route::get('/actors/{actor}', 'ActorController@show')->name('actors.show');
+
+Route::get('/directors/{director}', 'DirectorController@show')->name('directors.show');
