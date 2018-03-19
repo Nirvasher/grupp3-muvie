@@ -19,7 +19,8 @@ class CreateMoviesTable extends Migration
           $table->text('description')->nullable();
           $table->string('runtime')->nullable();
           $table->date('releasedate')->nullable();
-          $table->integer('media_id')->nullable()->unsigned();
+          $table->integer('director_id')->nullable()->unsigned();
+          $table->integer('image_id')->nullable()->unsigned();
           $table->timestamps();
         });
     }
