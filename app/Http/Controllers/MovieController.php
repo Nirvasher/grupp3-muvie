@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Movie;
+use App\Person;
+use App\Director;
+use App\Genre;
+use App\Image;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -24,7 +29,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-      return view('movies.create');
+      return view('movies.create', ['people' => Person::get()]);
     }
 
     /**
@@ -36,10 +41,25 @@ class MovieController extends Controller
     public function store(Request $request)
     {
       $movie = new Movie();
-      $movie->name = $request->input('movie');
+      $movie->title = $request->input('title');
+      $movie->description = $request->input('description');
+      $movie->runtime = $request->input('runtime');
+      $movie->releasedate = $request->input('releasedate');
       $movie->save();
 
-      Session::flash('flash_message', 'Filmen har skapats!');
+      if ($request->hasFile('poster')) {
+        $path = $request->file('poster')->store('images', 'public');
+
+        $image = new Image();
+        $image->url = $path;
+        $image->movie_id = $movie->id;
+        $image->save();
+
+        $movie->image_id = $image->id;
+        $movie->save();
+      }
+
+      Session::flash('flash_message', 'Filmen har lagts till!');
 
       return redirect()->route('movies.index');
     }
@@ -52,7 +72,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-      return view('movies.show', ['movie' => $movie]);
+      return view('movies.show', ['movie' => $movie, 'genres' => Genre::get()]);
     }
 
     /**
@@ -63,7 +83,7 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-      return view('movies.edit', ['movie' => $movie]);
+      return view('movies.edit', ['movie' => $movie, 'people' => Person::get()]);
     }
 
     /**
@@ -75,14 +95,25 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-      $movie->name = $request->input('name');
+      $director = Director::where('person_id', $request->input('director'))->first();
+      if(!$director) {
+        $director = new Director;
+        $director->person_id = $request->input('director');
+        $director->save();
+        $director = Director::where('person_id', $request->input('director'))->first();
+      }
+      $director = $director->id;
+
+      $movie->title = $request->input('title');
+      $movie->description = $request->input('description');
+      $movie->runtime = $request->input('runtime');
+      $movie->releasedate = $request->input('releasedate');
+      $movie->director_id = $director;
       $movie->save();
 
-//        $input = $request->all();
-//        $genre->fill($input)->save();
-        Session::flash('flash_message', 'Filmen har uppdaterats!');
+      Session::flash('flash_message', 'Filmen har uppdaterats!');
 
-        return redirect()->back();
+      return redirect()->back();
     }
 
     /**
@@ -94,5 +125,15 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         //
+    }
+
+    public function addGenre(Request $request, Movie $movie)
+    {
+      $genre = $request->input('genre');
+      $movie->genres()->attach($genre);
+
+      Session::flash('flash_message', 'Genren har lagts till!');
+
+      return redirect()->back();
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Session;
 use App\Actor;
+use App\Movie;
+use App\Person;
 use Illuminate\Http\Request;
 
 class ActorController extends Controller
@@ -23,9 +25,9 @@ class ActorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Movie $movie)
     {
-      return view('actors.create');
+      return view('actors.create', ['movie' => $movie, 'people' => Person::get()]);
     }
 
     /**
@@ -36,13 +38,22 @@ class ActorController extends Controller
      */
     public function store(Request $request)
     {
-      $actor = new Actor();
-      $actor->name = $request->input('actor');
-      $actor->save();
+      $actor = Actor::where('person_id', $request->input('actor'))->first();
+      if(!$actor) {
+        $actor = new Actor;
+        $actor->person_id = $request->input('actor');
+        $actor->save();
+        $actor = Actor::where('person_id', $request->input('actor'))->first();
+      }
+      $actor = $actor->id;
+
+      $movie = Movie::find($request->input('movie_id'));
+
+      $movie->actors()->attach($actor);
 
       Session::flash('flash_message', 'Skådespelaren har lagts till!');
 
-      return redirect()->route('actors.index');
+      return redirect()->route('movies.show', ['id' => $request->input('movie_id')]);
     }
 
     /**

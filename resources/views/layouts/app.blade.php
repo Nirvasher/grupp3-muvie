@@ -25,9 +25,6 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ route('genres.index') }}">Genrer</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('movies.index') }}">Filmer</a>
-          </li>
           @auth
           <li class="nav-item">
             <a class="nav-link" href="{{ route('users.show', ['user' => Auth::user()->id])}}">Min profil</a>
@@ -38,11 +35,9 @@
               Administrera
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Lägg till film</a>
-              <a class="dropdown-item" href="{{ route('genres.create') }}">Lägg till genre</a>
               <a class="dropdown-item" href="{{ route('movies.create') }}">Lägg till film</a>
-              <a class="dropdown-item" href="{{ route('actors.create') }}">Lägg till skådespelare</a>
-              <a class="dropdown-item" href="{{ route('directors.create') }}">Lägg till regissör</a>
+              <a class="dropdown-item" href="{{ route('genres.create') }}">Lägg till genre</a>
+              <a class="dropdown-item" href="{{ route('people.create') }}">Lägg till person</a>
             </div>
           </li>
           @endif

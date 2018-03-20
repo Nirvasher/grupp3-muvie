@@ -15,7 +15,7 @@ class CreateDirectorsTable extends Migration
     {
       Schema::create('directors', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('name');
+          $table->integer('person_id')->unsigned();
           $table->timestamps();
       });
     }

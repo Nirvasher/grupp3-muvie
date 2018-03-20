@@ -47,6 +47,6 @@ class User extends Authenticatable
     }
 
     public function libraries() {
-      return $this->hasMany('App\Library');
+      return $this->hasMany('App\Library')->orderBy('format');
     }
 }
