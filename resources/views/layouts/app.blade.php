@@ -27,7 +27,7 @@
           </li>
           @auth
           <li class="nav-item">
-            <a class="nav-link" href="#">Mitt bibliotek</a>
+            <a class="nav-link" href="{{ route('users.show', ['user' => Auth::user()->id])}}">Min profil</a>
           </li>
             @if (Auth::user()->hasRole('editor'))
           <li class="nav-item dropdown">

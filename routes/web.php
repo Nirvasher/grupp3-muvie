@@ -44,3 +44,10 @@ Route::post('/images', 'ImageController@store')->name('images.store');
 Route::get('/images/{image}/edit', 'ImageController@edit')->name('images.edit');
 Route::get('/images/{image}', 'ImageController@show')->name('images.show');
 Route::post('/images/{image}', 'ImageController@update')->name('images.update');
+
+Route::get('/users/{user}', 'UserController@show')->name('users.show');
+
+Route::get('/libraries/create/{movie}', 'LibraryController@create')->name('libraries.create');
+Route::post('/libraries/store/{movie}', 'LibraryController@store')->name('libraries.store');
+Route::get('/libraries/{library}/edit', 'LibraryController@edit')->name('libraries.edit');
+Route::post('/libraries/{library}', 'LibraryController@update')->name('libraries.update');
