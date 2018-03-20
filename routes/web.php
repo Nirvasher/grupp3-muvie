@@ -38,3 +38,9 @@ Route::post('/directors', 'DirectorController@store')->name('directors.store');
 Route::get('/directors/{director}/edit', 'DirectorController@edit')->name('directors.edit');
 Route::get('/directors/{director}', 'DirectorController@show')->name('directors.show');
 Route::post('/directors/{director}', 'DirectorController@update')->name('directors.update');
+
+Route::get('/images/create/{movie}', 'ImageController@create')->name('images.create');
+Route::post('/images', 'ImageController@store')->name('images.store');
+Route::get('/images/{image}/edit', 'ImageController@edit')->name('images.edit');
+Route::get('/images/{image}', 'ImageController@show')->name('images.show');
+Route::post('/images/{image}', 'ImageController@update')->name('images.update');
