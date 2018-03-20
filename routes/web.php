@@ -16,10 +16,11 @@ Auth::routes();
 Route::get('/', 'MovieController@index')->name('home');
 Route::get('/home', 'MovieController@index');
 Route::get('/movies', 'MovieController@index')->name('movies.index');
-Route::get('/movies/{movie}', 'MovieController@show')->name('movies.show');
 Route::get('/movies/create', 'MovieController@create')->name('movies.create');
 Route::post('/movies', 'MovieController@store')->name('movies.store');
 Route::get('/movies/{movie}/edit', 'MovieController@edit')->name('movies.edit');
+Route::post('/movies/{movie}/add/genre', 'MovieController@addGenre')->name('movies.addGenre');
+Route::get('/movies/{movie}', 'MovieController@show')->name('movies.show');
 Route::post('/movies/{movie}', 'MovieController@update')->name('movies.update');
 
 Route::get('/genres', 'GenreController@index')->name('genres.index');
@@ -31,6 +32,7 @@ Route::post('/genres/{genre}', 'GenreController@update')->name('genres.update');
 
 Route::get('/actors', 'ActorController@index')->name('actors.index');
 Route::get('/actors/create', 'ActorController@create')->name('actors.create');
+Route::get('/actors/add/{movie}', 'ActorController@create')->name('actors.add');
 Route::post('/actors', 'ActorController@store')->name('actors.store');
 Route::get('/actors/{actor}/edit', 'ActorController@edit')->name('actors.edit');
 Route::get('/actors/{actor}', 'ActorController@show')->name('actors.show');
@@ -55,3 +57,10 @@ Route::get('/libraries/create/{movie}', 'LibraryController@create')->name('libra
 Route::post('/libraries/store/{movie}', 'LibraryController@store')->name('libraries.store');
 Route::get('/libraries/{library}/edit', 'LibraryController@edit')->name('libraries.edit');
 Route::post('/libraries/{library}', 'LibraryController@update')->name('libraries.update');
+
+Route::get('/people', 'PersonController@index')->name('people.index');
+Route::get('/people/create', 'PersonController@create')->name('people.create');
+Route::post('/people', 'PersonController@store')->name('people.store');
+Route::get('/people/{person}/edit', 'PersonController@edit')->name('people.edit');
+Route::get('/people/{person}', 'PersonController@show')->name('people.show');
+Route::post('/people/{person}', 'PersonController@update')->name('people.update');

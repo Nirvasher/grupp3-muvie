@@ -7,7 +7,11 @@
     @csrf
     <div class="form-group">
       <label for="format">Format</label>
-      <input type="text" class="form-control" id="format" name="format" placeholder="Välj vilket format">
+      <select class="form-control" name="format" id="format">
+        <option value="Blu-ray">Blu-ray</option>
+        <option value="DVD">DVD</option>
+        <option value="VHS">VHS</option>
+      </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Lägg till</button>

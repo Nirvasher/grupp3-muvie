@@ -7,7 +7,11 @@
       @csrf
       <div class="form-group">
         <label for="format">Format</label>
-        <input type="text" class="form-control" id="format" name="format" value="{{ $library->format }}" placeholder="Ändra valt format">
+        <select class="form-control" name="format" id="format">
+          <option value="Blu-ray"{{ $library->format === "Blu-ray" ? " selected" : "" }}>Blu-ray</option>
+          <option value="DVD"{{ $library->format === "DVD" ? " selected" : "" }}>DVD</option>
+          <option value="VHS"{{ $library->format === "VHS" ? " selected" : "" }}>VHS</option>
+        </select>
 
       </div>
 
