@@ -6,7 +6,12 @@
 <h3>Beskrivning</h3>{{$movie->description}}<br>
 <h3>Speltid</h3>{{$movie->runtime}}<br>
 <h3>Släppt Datum</h3>{{$movie->releasedate}}<br>
-<h3>Media ID</h3><img src="{{ asset('storage/'.$movie->image->url) }}"><br>
+<h3>Media ID</h3>
+@empty($movie->image)
+-
+@else
+<img src="{{ asset('storage/'.$movie->image->url) }}"><br>
+@endempty
 <h3>Regissör</h3>
 @empty($movie->director)
 -
@@ -25,5 +30,6 @@
 @foreach ($movie->images as $image)
 <img src="{{ asset('storage/'.$image->url) }}"><br>
 @endforeach
+<a class="btn btn-primary" href="{{ route('libraries.create', ['movie' => $movie->id]) }}">Lägg till i biblioteket</a>
 </div>
 @endsection
