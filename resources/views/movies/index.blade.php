@@ -15,6 +15,7 @@
           <div class="card-footer">
             <a href="{{route('movies.show', ['id' => $movie->id])}}" class="btn btn-success btn-block">Läs mer</a><br>
           </div><!-- /card-footer -->
+          <a href="{{ route('movies.create') }}" class="btn btn-primary">Lägg till ny film</a>
         </div><!-- /card -->
       @endforeach
     </div><!-- /card-deck -->
