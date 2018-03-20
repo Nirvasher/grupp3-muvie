@@ -24,7 +24,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+      return view('movies.create');
     }
 
     /**
@@ -35,7 +35,13 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $movie = new Movie();
+      $movie->name = $request->input('movie');
+      $movie->save();
+
+      Session::flash('flash_message', 'Filmen har skapats!');
+
+      return redirect()->route('movies.index');
     }
 
     /**
@@ -57,7 +63,7 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        //
+      return view('movies.edit', ['movie' => $movie]);
     }
 
     /**
@@ -69,7 +75,14 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        //
+      $movie->name = $request->input('name');
+      $movie->save();
+
+//        $input = $request->all();
+//        $genre->fill($input)->save();
+        Session::flash('flash_message', 'Filmen har uppdaterats!');
+
+        return redirect()->back();
     }
 
     /**
