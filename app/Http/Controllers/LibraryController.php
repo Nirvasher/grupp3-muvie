@@ -39,6 +39,10 @@ class LibraryController extends Controller
      */
     public function store(Request $request, Movie $movie)
     {
+      /**
+       * [Adding a movie to your library]
+       * @var Library
+       */
       $library = new Library();
       $library->movie_id = $movie->id;
       $library->user_id = Auth::user()->id;
@@ -81,6 +85,10 @@ class LibraryController extends Controller
      */
     public function update(Request $request, Library $library)
     {
+      /**
+       * [Update the library]
+       * @var [type]
+       */
       $library->format = $request->input('format');
       $library->save();
 

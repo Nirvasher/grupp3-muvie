@@ -36,6 +36,10 @@ class DirectorController extends Controller
      */
     public function store(Request $request)
     {
+      /**
+       * [Create a director]
+       * @var Director
+       */
       $director = new Director();
       $director->name = $request->input('director');
       $director->save();
@@ -76,6 +80,10 @@ class DirectorController extends Controller
      */
     public function update(Request $request, Director $director)
     {
+      /**
+       * [Making changes on a director]
+       * @var [type]
+       */
       $director->name = $request->input('name');
       $director->save();
 

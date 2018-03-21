@@ -38,6 +38,10 @@ class RatingController extends Controller
      */
     public function store(Movie $movie, Request $request)
     {
+      /**
+       * [Checks if the user has already rated]
+       * @var [type]
+       */
       $check = Rating::where('user_id', Auth::user()->id)->where('movie_id', $movie->id)->first();
       if (!$check) {
         $rating = new Rating();

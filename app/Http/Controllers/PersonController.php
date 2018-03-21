@@ -41,7 +41,10 @@ class PersonController extends Controller
       $person->save();
 
       Session::flash('flash_message', 'Personen har lagts till!');
-
+      /**
+       * The person has been added
+       * @var [type]
+       */
       return redirect()->route('people.index');
     }
 
@@ -76,6 +79,10 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
+      /**
+       * [Updating and making changes to person]
+       * @var [type]
+       */
       $person->name = $request->input('person');
       $person->save();
 

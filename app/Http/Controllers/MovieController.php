@@ -58,6 +58,10 @@ class MovieController extends Controller
         $movie->image_id = $image->id;
         $movie->save();
       }
+      /**
+       * [Pop-up on the previous site (movies.index) that says the movie has been added/created.]
+       * @var [type]
+       */
 
       Session::flash('flash_message', 'Filmen har lagts till!');
 
@@ -122,8 +126,16 @@ class MovieController extends Controller
       $movie->director_id = $director;
       $movie->save();
 
+/**
+ * [Pop-up of a message.]
+ * @var [type]
+ */
       Session::flash('flash_message', 'Filmen har uppdaterats!');
 
+/**
+ * [returns client to the previous page after the movie has been changed.]
+ * @var [type]
+ */
       return redirect()->back();
     }
 
@@ -137,7 +149,11 @@ class MovieController extends Controller
     {
         //
     }
-
+ /**
+  * [Creates a genre for the specific movie selected]
+  * @param Request $request [description]
+  * @param Movie   $movie   [description]
+  */
     public function addGenre(Request $request, Movie $movie)
     {
       $genre = $request->input('genre');

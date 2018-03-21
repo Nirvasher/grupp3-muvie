@@ -36,6 +36,10 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
+      /**
+       * [Creating a genre]
+       * @var Genre
+       */
       $genre = new Genre();
       $genre->name = $request->input('genre');
       $genre->save();
