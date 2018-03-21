@@ -9,9 +9,34 @@
 @if ($movie->releasedate < Carbon\Carbon::now())
 {{$movie->releasedate}}
 @else
-Under produktion
+Under produktion, släpps {{$movie->releasedate}}
 @endif
 <br>
+<h3>Betyget för filmen</h3>
+<?php
+$countedRatings = $movie->ratings->count();
+$sumRatings = 0;
+foreach ($movie->ratings as $rating) {
+  $sumRatings += $rating->rating;
+}
+if($countedRatings) {
+  $averageRating = $sumRatings/$countedRatings;
+  echo $averageRating.'<br>';
+  echo 'Antal betyg:'.$countedRatings;
+}
+?>
+<h3>Betygsätt</h3>
+<form action="{{route('ratings.store', ['id' => $movie->id])}}" method="post">
+  @csrf
+  <select class="form-control" name="rating">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <button type="submit" name="button" class="btn btn-primary">Lägg till betyg</button>
+</form>
 <h3>Posterbild</h3>
 @empty($movie->image)
 -
