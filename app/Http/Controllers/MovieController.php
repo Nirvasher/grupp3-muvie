@@ -58,6 +58,10 @@ class MovieController extends Controller
         $movie->image_id = $image->id;
         $movie->save();
       }
+      /*
+      Här får man ett meddelande om att filmen har lagts upp.
+      Sedan blir man redirected till movies.index (Hem till movies)
+       */
 
       Session::flash('flash_message', 'Filmen har lagts till!');
 
@@ -122,8 +126,14 @@ class MovieController extends Controller
       $movie->director_id = $director;
       $movie->save();
 
+/*
+Meddelande om att dina ändringar har sparats.
+ */
       Session::flash('flash_message', 'Filmen har uppdaterats!');
 
+/*
+Här blir man redirected efter meddelandet.
+ */
       return redirect()->back();
     }
 
@@ -138,6 +148,9 @@ class MovieController extends Controller
         //
     }
 
+/*
+Här lägger man in ett genre till den specifika filmen du är inne på.
+ */
     public function addGenre(Request $request, Movie $movie)
     {
       $genre = $request->input('genre');
