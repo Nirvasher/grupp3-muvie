@@ -3,7 +3,7 @@
 
   <div class="container">
 
-    <form method="POST" action="{{ route('movies.update', ['movie' => $movie->id]) }}">
+    <form method="POST" action="{{ route('movies.update', ['movie' => $movie->id]) }}" enctype="multipart/form-data">
       @csrf
       <div class="form-group">
         <label for="title">Filmtitel</label>
@@ -35,10 +35,15 @@
           @endempty
         </select>
       </div>
-
+      <div class="form-group">
+        <label for="poster">Posterbild</label>
+        <input type="file" class="form-control" id="poster" name="poster">
+        @isset($movie->image->url)
+        <small id="fileHelp" class="form-text text-muted">Det finns redan en uppladdad bild för postern. Laddas en ny upp kommer den att ersättas.</small>
+        @endisset
+      </div>
       <button type="submit" class="btn btn-primary">Spara</button>
     </form>
-
-</div>
+      </div>
 
 @endsection

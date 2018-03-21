@@ -104,6 +104,17 @@ class MovieController extends Controller
       }
       $director = $director->id;
 
+      if ($request->hasFile('poster')) {
+        $path = $request->file('poster')->store('images', 'public');
+
+        $image = new Image();
+        $image->url = $path;
+        $image->movie_id = $movie->id;
+        $image->save();
+
+        $movie->image_id = $image->id;
+      }
+
       $movie->title = $request->input('title');
       $movie->description = $request->input('description');
       $movie->runtime = $request->input('runtime');
