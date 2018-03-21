@@ -64,3 +64,5 @@ Route::post('/people', 'PersonController@store')->name('people.store');
 Route::get('/people/{person}/edit', 'PersonController@edit')->name('people.edit');
 Route::get('/people/{person}', 'PersonController@show')->name('people.show');
 Route::post('/people/{person}', 'PersonController@update')->name('people.update');
+
+Route::post('/rate/movie/{movie}', 'RatingController@store')->name('ratings.store');
