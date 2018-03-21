@@ -45,6 +45,10 @@ class ActorController extends Controller
         $actor->save();
         $actor = Actor::where('person_id', $request->input('actor'))->first();
       }
+      /**
+       * [Pop-up about adding an actor to a movie]
+       * @var [type]
+       */
       $actor = $actor->id;
 
       $movie = Movie::find($request->input('movie_id'));
@@ -87,6 +91,10 @@ class ActorController extends Controller
      */
     public function update(Request $request, Actor $actor)
     {
+      /**
+       * [Pop-up about updating an actor's settings]
+       * @var [type]
+       */
       $actor->name = $request->input('name');
       $actor->save();
 

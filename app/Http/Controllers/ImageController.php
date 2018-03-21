@@ -37,6 +37,10 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
+      /**
+       * [Photo directorirs]
+       * @var [type]
+       */
       $path = $request->file('image')->store('images', 'public');
 
       $image = new Image();
