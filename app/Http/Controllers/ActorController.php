@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class ActorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Displays all actors.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns the view actors.index with Actors model.
      */
     public function index()
     {
@@ -21,9 +21,10 @@ class ActorController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Shows the form for creating a new actor.
      *
-     * @return \Illuminate\Http\Response
+     * @param  Movie  $movie Gets the movie based on the requested ID.
+     * @return view        Returns the view actors.create with the models Movie and People.
      */
     public function create(Movie $movie)
     {
@@ -31,10 +32,10 @@ class ActorController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Stores the new actor into the database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Uses the Laravel Request object to get form-data.
+     * @return redirect           Sends the user to the route movies.show, with movie ID.
      */
     public function store(Request $request)
     {
@@ -45,72 +46,29 @@ class ActorController extends Controller
         $actor->save();
         $actor = Actor::where('person_id', $request->input('actor'))->first();
       }
-      /**
-       * [Pop-up about adding an actor to a movie]
-       * @var [type]
-       */
+
       $actor = $actor->id;
 
       $movie = Movie::find($request->input('movie_id'));
 
-      $movie->actors()->attach($actor);
+      $actorMovie = $movie->actors->where('id', $actor)->first();
+      if(!$actorMovie) {
+        $movie->actors()->attach($actor);
 
-      Session::flash('flash_message', 'Skådespelaren har lagts till!');
+        Session::flash('flash_message', 'Skådespelaren har lagts till!');
+      }
 
       return redirect()->route('movies.show', ['id' => $request->input('movie_id')]);
     }
 
     /**
-     * Display the specified resource.
+     * Shows the selected actor.
      *
-     * @param  \App\Actor  $actor
-     * @return \Illuminate\Http\Response
+     * @param  Actor  $actor Gets the actor based on the requested ID.
+     * @return view        Returns the view actors.show, with the model Actor.
      */
     public function show(Actor $actor)
     {
       return view('actors.show', ['actor' => $actor]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Actor  $actor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Actor $actor)
-    {
-      return view('actors.edit', ['actor' => $actor]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Actor  $actor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Actor $actor)
-    {
-      /**
-       * [Pop-up about updating an actor's settings]
-       * @var [type]
-       */
-      $actor->name = $request->input('name');
-      $actor->save();
-
-      Session::flash('flash_message', 'Skådespelaren har uppdaterats!');
-
-      return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Actor  $actor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Actor $actor)
-    {
-        //
     }
 }

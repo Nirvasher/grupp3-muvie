@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class GenreController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows all the genres from the database.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns view genres.index with model Genre.
      */
     public function index()
     {
@@ -19,9 +19,9 @@ class GenreController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Shows a form for creating a new genre.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns view genres.create.
      */
     public function create()
     {
@@ -29,17 +29,13 @@ class GenreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Stores a new genre in the database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets new genre name from form data.
+     * @return redirect           Redirects user to the genres.index.
      */
     public function store(Request $request)
     {
-      /**
-       * [Creating a genre]
-       * @var Genre
-       */
       $genre = new Genre();
       $genre->name = $request->input('genre');
       $genre->save();
@@ -50,10 +46,10 @@ class GenreController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Shows the choosen genre.
      *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
+     * @param  Genre  $genre Gets ID from request and uses model to fetch relevant data.
+     * @return view        Returns the view genres.show with the model genre.
      */
     public function show(Genre $genre)
     {
@@ -61,10 +57,10 @@ class GenreController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Gets data from database so the user can edit in a form.
      *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
+     * @param  Genre  $genre Gets ID from request and uses model to fetch relevant data.
+     * @return view        Retuns the view genres.edit with the model genre.
      */
     public function edit(Genre $genre)
     {
@@ -72,32 +68,19 @@ class GenreController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates the data in the database for the choosen genre.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets form data.
+     * @param  Genre   $genre   Gets ID from request and uses model to fetch relevant data.
+     * @return redirect           Redirects the user to the last visited page.
      */
     public function update(Request $request, Genre $genre)
     {
       $genre->name = $request->input('name');
       $genre->save();
 
-//        $input = $request->all();
-//        $genre->fill($input)->save();
-        Session::flash('flash_message', 'Genren har uppdaterats!');
+      Session::flash('flash_message', 'Genren har uppdaterats!');
 
-        return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Genre $genre)
-    {
-
+      return redirect()->back();
     }
 }

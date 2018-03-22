@@ -31,6 +31,12 @@ class User extends Authenticatable
       return $this->belongsToMany('App\Role');
     }
 
+    /**
+     * Method for checking if a user has a role or roles.
+     *
+     * @param  string $roles The role/s
+     * @return boolean        Returns true or false.
+     */
     public function authorizeRoles($roles) {
       if(is_array($roles)) {
         return $this->hasAnyRole($roles) || false;
@@ -38,10 +44,22 @@ class User extends Authenticatable
       return $this->hasRole($roles) || false;
     }
 
+    /**
+     * Checks if the user has any role.
+     *
+     * @param  string  $roles The roles
+     * @return boolean        Returns true or false.
+     */
     public function hasAnyRole($roles) {
       return null !== $this->roles()->whereIn('name', $roles)->first();
     }
 
+    /**
+     * Checks if the user has a role.
+     *
+     * @param  string  $role The role
+     * @return boolean       Returns true or false.
+     */
     public function hasRole($role) {
       return null !== $this->roles()->where('name', $role)->first();
     }

@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class PersonController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows all the names of people stored in the database.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns the view people.index with the people model.
      */
     public function index()
     {
@@ -19,9 +19,9 @@ class PersonController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Shows a form for the user.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns the view people.create.
      */
     public function create()
     {
@@ -29,10 +29,10 @@ class PersonController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Stores the name in the database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets file upload form data.
+     * @return redirect           Redirects the user to the page people.index.
      */
     public function store(Request $request)
     {
@@ -41,18 +41,15 @@ class PersonController extends Controller
       $person->save();
 
       Session::flash('flash_message', 'Personen har lagts till!');
-      /**
-       * The person has been added
-       * @var [type]
-       */
+
       return redirect()->route('people.index');
     }
 
     /**
-     * Display the specified resource.
+     * Shows a selected persons name.
      *
-     * @param  \App\Person  $person
-     * @return \Illuminate\Http\Response
+     * @param  Person $person Gets ID from request and uses model to fetch relevant data.
+     * @return view         Returns the view people.show with the person model.
      */
     public function show(Person $person)
     {
@@ -60,10 +57,10 @@ class PersonController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Shows a form so the user can edit the name.
      *
-     * @param  \App\Person  $person
-     * @return \Illuminate\Http\Response
+     * @param  Person $person Gets ID from request and uses model to fetch relevant data.
+     * @return view         Returns the view people.edit with the person model.
      */
     public function edit(Person $person)
     {
@@ -71,34 +68,19 @@ class PersonController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates the name for the choosen person.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Person  $person
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets form data.
+     * @param  Person  $person  Gets ID from request and uses model to fetch relevant data.
+     * @return redirect           Redirects the user to the last visited page.
      */
     public function update(Request $request, Person $person)
     {
-      /**
-       * [Updating and making changes to person]
-       * @var [type]
-       */
       $person->name = $request->input('person');
       $person->save();
 
       Session::flash('flash_message', 'Personen har uppdaterats!');
 
       return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Person  $person
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Person $person)
-    {
-        //
     }
 }

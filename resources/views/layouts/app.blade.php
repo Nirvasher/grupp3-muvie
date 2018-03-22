@@ -38,6 +38,7 @@
               <a class="dropdown-item" href="{{ route('movies.create') }}">Lägg till film</a>
               <a class="dropdown-item" href="{{ route('genres.create') }}">Lägg till genre</a>
               <a class="dropdown-item" href="{{ route('people.create') }}">Lägg till person</a>
+              <a class="dropdown-item" href="{{ route('people.index') }}">Visa alla personer</a>
             </div>
           </li>
           @endif

@@ -34,22 +34,13 @@ Route::get('/actors', 'ActorController@index')->name('actors.index');
 Route::get('/actors/create', 'ActorController@create')->name('actors.create');
 Route::get('/actors/add/{movie}', 'ActorController@create')->name('actors.add');
 Route::post('/actors', 'ActorController@store')->name('actors.store');
-Route::get('/actors/{actor}/edit', 'ActorController@edit')->name('actors.edit');
 Route::get('/actors/{actor}', 'ActorController@show')->name('actors.show');
-Route::post('/actors/{actor}', 'ActorController@update')->name('actors.update');
 
 Route::get('/directors', 'DirectorController@index')->name('directors.index');
-Route::get('/directors/create', 'DirectorController@create')->name('directors.create');
-Route::post('/directors', 'DirectorController@store')->name('directors.store');
-Route::get('/directors/{director}/edit', 'DirectorController@edit')->name('directors.edit');
 Route::get('/directors/{director}', 'DirectorController@show')->name('directors.show');
-Route::post('/directors/{director}', 'DirectorController@update')->name('directors.update');
 
 Route::get('/images/create/{movie}', 'ImageController@create')->name('images.create');
 Route::post('/images', 'ImageController@store')->name('images.store');
-Route::get('/images/{image}/edit', 'ImageController@edit')->name('images.edit');
-Route::get('/images/{image}', 'ImageController@show')->name('images.show');
-Route::post('/images/{image}', 'ImageController@update')->name('images.update');
 
 Route::get('/users/{user}', 'UserController@show')->name('users.show');
 
