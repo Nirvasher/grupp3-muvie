@@ -19,7 +19,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return view('movies.index', ['movies' => Movie::get()]);
+        return view('movies.index', ['movies' => Movie::orderBy('title')->get()]);
     }
 
     /**
