@@ -12,19 +12,10 @@ use Illuminate\Http\Request;
 class LibraryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lets the user add a movie by selecting a format for the movie.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param  Movie  $movie Gets ID from request and uses model to fetch relevant data.
+     * @return view        Returns the view images.create with the model movie.
      */
     public function create(Movie $movie)
     {
@@ -32,44 +23,33 @@ class LibraryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Stores the choosen movie in the users library.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets form data.
+     * @param  Movie   $movie   Gets ID from request and uses model to fetch relevant data.
+     * @return redirect           Redirects the user to movies.show with movie ID.
      */
     public function store(Request $request, Movie $movie)
     {
-      /**
-       * [Adding a movie to your library]
-       * @var Library
-       */
-      $library = new Library();
-      $library->movie_id = $movie->id;
-      $library->user_id = Auth::user()->id;
-      $library->format = $request->input('format');
-      $library->save();
+      $movieLibrary = Auth::user()->libraries->where('movie_id', $movie->id)->first();
+      if(!$movieLibrary) {
+        $library = new Library();
+        $library->movie_id = $movie->id;
+        $library->user_id = Auth::user()->id;
+        $library->format = $request->input('format');
+        $library->save();
 
-      Session::flash('flash_message', 'Filmen har lagts till i ditt bibliotek!');
+        Session::flash('flash_message', 'Filmen har lagts till i ditt bibliotek!');
+      }
 
-      return redirect()->back();
+      return redirect()->route('movies.show', ['id' => $movie->id]);
     }
 
     /**
-     * Display the specified resource.
+     * Lets the user edit the format for the movie in the library.
      *
-     * @param  \App\Library  $library
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Library $library)
-    {
-      //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Library  $library
-     * @return \Illuminate\Http\Response
+     * @param  Library $library Gets ID from request and uses model to fetch relevant data.
+     * @return view           Returns the view libraries.edit with the model library.
      */
     public function edit(Library $library)
     {
@@ -77,34 +57,19 @@ class LibraryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates the choosen library with new format-information.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Library  $library
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets form data.
+     * @param  Library $library Gets ID from request and uses model to fetch relevant data.
+     * @return redirect           Redirects the user to the last visited page.
      */
     public function update(Request $request, Library $library)
     {
-      /**
-       * [Update the library]
-       * @var [type]
-       */
       $library->format = $request->input('format');
       $library->save();
 
       Session::flash('flash_message', 'Biblioteket har uppdaterats!');
 
       return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Library  $library
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Library $library)
-    {
-        //
     }
 }

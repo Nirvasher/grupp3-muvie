@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows all the movies in the database.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns the view movies.index with the movies model.
      */
     public function index()
     {
@@ -23,9 +23,9 @@ class MovieController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Shows a form so the user can edit the choosen movie.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns the view movies.create with the people model.
      */
     public function create()
     {
@@ -33,10 +33,10 @@ class MovieController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Stores the new movie in the database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets the multi form data.
+     * @return redirect           Redirects the user to the index page for movies.
      */
     public function store(Request $request)
     {
@@ -58,10 +58,6 @@ class MovieController extends Controller
         $movie->image_id = $image->id;
         $movie->save();
       }
-      /**
-       * [Pop-up on the previous site (movies.index) that says the movie has been added/created.]
-       * @var [type]
-       */
 
       Session::flash('flash_message', 'Filmen har lagts till!');
 
@@ -69,10 +65,10 @@ class MovieController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Shows the selected movie.
      *
-     * @param  \App\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @param  Movie  $movie Gets ID from request and uses model to fetch relevant data.
+     * @return view        Returns the view movies.show with the models movie and genre.
      */
     public function show(Movie $movie)
     {
@@ -80,10 +76,10 @@ class MovieController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Lets the user edit the movie. Shows form.
      *
-     * @param  \App\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @param  Movie  $movie Gets ID from request and uses model to fetch relevant data.
+     * @return view        Returns the view movies.edit with the models movie and people.
      */
     public function edit(Movie $movie)
     {
@@ -91,11 +87,11 @@ class MovieController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates the data for the movie in the database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets form data.
+     * @param  Movie   $movie   Gets ID from request and uses model to fetch relevant data.
+     * @return redirect           Redirects the user to the last visited page.
      */
     public function update(Request $request, Movie $movie)
     {
@@ -126,40 +122,28 @@ class MovieController extends Controller
       $movie->director_id = $director;
       $movie->save();
 
-/**
- * [Pop-up of a message.]
- * @var [type]
- */
       Session::flash('flash_message', 'Filmen har uppdaterats!');
 
-/**
- * [returns client to the previous page after the movie has been changed.]
- * @var [type]
- */
       return redirect()->back();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Attaches a genre to a movie.
      *
-     * @param  \App\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets form data.
+     * @param  Movie   $movie   Gets ID from request and uses model to fetch relevant data.
+     * @return redirect           Redirects the user to the last visited page.
      */
-    public function destroy(Movie $movie)
-    {
-        //
-    }
- /**
-  * [Creates a genre for the specific movie selected]
-  * @param Request $request [description]
-  * @param Movie   $movie   [description]
-  */
     public function addGenre(Request $request, Movie $movie)
     {
       $genre = $request->input('genre');
-      $movie->genres()->attach($genre);
 
-      Session::flash('flash_message', 'Genren har lagts till!');
+      $genreMovie = $movie->genres->where('id', $genre)->first();
+      if (!$genreMovie) {
+        $movie->genres()->attach($genre);
+
+        Session::flash('flash_message', 'Genren har lagts till!');
+      }
 
       return redirect()->back();
     }

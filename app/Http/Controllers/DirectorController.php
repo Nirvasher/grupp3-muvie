@@ -9,44 +9,13 @@ use Illuminate\Http\Request;
 class DirectorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows all the directors from the database.
      *
-     * @return \Illuminate\Http\Response
+     * @return view Returns the view directors.index, with the Director model.
      */
     public function index()
     {
       return view('directors.index', ['directors' => Director::get()]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      return view('directors.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-      /**
-       * [Create a director]
-       * @var Director
-       */
-      $director = new Director();
-      $director->name = $request->input('director');
-      $director->save();
-
-      Session::flash('flash_message', 'Regissören har lagts till!');
-
-      return redirect()->route('directors.index');
     }
 
     /**
@@ -55,51 +24,15 @@ class DirectorController extends Controller
      * @param  \App\Director  $director
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * Shows the selected director based on the requested ID.
+     *
+     * @param  Director $director Gets the model for the director based on the ID.
+     * @return view             Returns a view with directors.show and a model based on the requested ID.
+     */
     public function show(Director $director)
     {
       return view('directors.show', ['director' => $director]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Director  $director
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Director $director)
-    {
-      return view('directors.edit', ['director' => $director]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Director  $director
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Director $director)
-    {
-      /**
-       * [Making changes on a director]
-       * @var [type]
-       */
-      $director->name = $request->input('name');
-      $director->save();
-
-      Session::flash('flash_message', 'Regissören har uppdaterats!');
-
-      return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Director  $director
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Director $director)
-    {
-        //
     }
 }

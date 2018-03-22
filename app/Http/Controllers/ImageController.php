@@ -10,19 +10,10 @@ use Illuminate\Http\Request;
 class ImageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows a upload form for the user and shows selected movie.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param  Movie  $movie Gets ID from request and uses model to fetch relevant data.
+     * @return view        Returns the view images.create with the model movie.
      */
     public function create(Movie $movie)
     {
@@ -30,17 +21,13 @@ class ImageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Uploads image and stores image information to the database, linked to the movie.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request Gets file upload form data.
+     * @return redirect           Redirects the user to movies.show with movie ID.
      */
     public function store(Request $request)
     {
-      /**
-       * [Photo directorirs]
-       * @var [type]
-       */
       $path = $request->file('image')->store('images', 'public');
 
       $image = new Image();
@@ -51,50 +38,5 @@ class ImageController extends Controller
       Session::flash('flash_message', 'Bilden har lagts till!');
 
       return redirect()->route('movies.show', ['movie' => $request->input('movie_id')]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Image $image)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Image $image)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Image $image)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Image $image)
-    {
-        //
     }
 }
