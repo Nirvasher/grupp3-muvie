@@ -133,7 +133,7 @@
         @endif
       </div>
     </div>
-      <div class="" style="display: grid; grid-template-columns: auto auto auto auto;">
+      <div class="gallery-grid">
         @foreach ($movie->images as $image)
         <a href="{{ asset('storage/'.$image->url) }}"><img src="{{ asset('storage/'.$image->url) }}" width="150"></a>
         @endforeach
